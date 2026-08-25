@@ -442,6 +442,30 @@ project files under options/ios/    →  none found</span>
     </label>
   </section>
 
+  <!-- ============ CODE REVIEW FOLLOW-UPS ============ -->
+  <section>
+    <div class="sec-head"><h2>Code review follow-ups</h2><span class="count">not store gates</span></div>
+    <p style="font-size:.9rem;color:var(--ink-soft);margin:8px 0 0">Code-quality items from the post-cleanup review, tracked separately from the 24 store gates above. Six other findings are already fixed or verified: the deprecated battle-timer call, a memory-leak guard, a duplicate save block, GUI sizing, the dead Arena button (now "Coming Soon"), and the effects-layer crash check.</p>
+
+    <label class="item sev-setup">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">To do</span> Gate debug logging for release</div>
+        <p class="detail">259 <code>show_debug_message</code> calls run in the shipping build. Route them through one <code>global.debug</code> flag (or strip them) so nothing logs in release. Small performance and log-noise win, no gameplay change.</p>
+        <div class="owner"><span class="otag">Engineering</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-setup">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Optional</span> Simplify obj_game_manager step logic</div>
+        <p class="detail">The battle win/lose check is about 700 lines of copy-pasted slot checks, written loop-free on purpose. A small loop or helper would cut it by roughly 80% and make future changes safer. No behavior change; do it only if we want the maintainability.</p>
+        <div class="owner"><span class="otag">Engineering</span><span class="otag">Optional</span></div>
+      </div>
+    </label>
+  </section>
+
   <div class="callout">
     <h3>✓ Applied to the project, on cleanup/unused-assets (pushed)</h3>
     <p style="margin:0;color:var(--ink-soft)">All the config-level fixes are committed to the <code>.yy</code> option files, no game code touched:</p>
