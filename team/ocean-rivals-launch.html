@@ -158,7 +158,7 @@
   <header>
     <p class="eyebrow">MythwaveStudios · Submission Readiness</p>
     <h1>Ocean Rivals <span class="thin">Launch Manifest</span></h1>
-    <p class="lede">Every gate between the current build and a live listing on Google Play and the Apple App Store — read straight from the project's platform config, sorted by what stops a submission and who owns the fix.</p>
+    <p class="lede">Every gate between the current build and a live listing on Google Play and the Apple App Store, read straight from the project's platform config, sorted by what stops a submission and who owns the fix.</p>
     <div class="meta">
       <span><b>Source:</b> options/android · options/ios · options/main</span>
       <span><b>Build ver:</b> 1.0.0.0</span>
@@ -177,10 +177,10 @@
   <p class="progress-cap">13 of 24 cleared &middot; everything writeable is done (config, privacy, support, store copy, data-safety, age rating) &middot; remaining work is icon art, accounts &amp; screenshots</p>
 
   <div class="legend">
-    <span class="chip"><span class="dot d-block"></span>Blocker — fails review or is permanent if wrong</span>
-    <span class="chip"><span class="dot d-warn"></span>Warning — likely rejection / quality</span>
-    <span class="chip"><span class="dot d-setup"></span>Setup — account, asset or console gate</span>
-    <span class="chip"><span class="dot d-ready"></span>Ready — already correct</span>
+    <span class="chip"><span class="dot d-block"></span>Blocker: fails review or is permanent if wrong</span>
+    <span class="chip"><span class="dot d-warn"></span>Warning: likely rejection or quality issue</span>
+    <span class="chip"><span class="dot d-setup"></span>Setup: account, asset or console gate</span>
+    <span class="chip"><span class="dot d-ready"></span>Ready: already correct</span>
   </div>
   <p style="font-size:.82rem;color:var(--ink-faint);margin:10px 0 0">Owner chips: <b style="color:var(--brass)">Project fix</b> = I can edit the <code>.yy</code> files now · <b>Decision</b> = needs your call · <b>Console</b> = Play/App Store Connect · <b>Account/Tools</b> = memberships, Mac/Xcode, signing · <b>Assets</b> = art, copy, screenshots. Tap a checkbox to mark a gate cleared (this session).</p>
 
@@ -192,7 +192,7 @@
       <input type="checkbox" class="box" checked>
       <div class="body">
         <div class="title"><span class="donetag">✓ Done</span> App name unified across platforms</div>
-        <p class="detail">iOS display name updated to match Android — both now ship as <span class="k">Ocean Rivals</span>.</p>
+        <p class="detail">iOS display name updated to match Android, so both now ship as <span class="k">Ocean Rivals</span>.</p>
         <span class="found">android · option_android_display_name = <span class="good">"Ocean Rivals"</span>
 ios     · option_ios_display_name     = <span class="good">"Ocean Rivals"</span>  ✓</span>
         <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span></div>
@@ -211,7 +211,7 @@ ios     · option_ios_display_name     = <span class="good">"Ocean Rivals"</span
     <label class="item sev-setup done">
       <input type="checkbox" class="box" checked>
       <div class="body">
-        <div class="title"><span class="donetag">✓ Done</span> Privacy policy — written &amp; live</div>
+        <div class="title"><span class="donetag">✓ Done</span> Privacy policy written &amp; live</div>
         <p class="detail">Drafted from the actual code (offline, no data collected), styled to the MythWave site, and published on your own domain. Paste this URL into both store consoles.</p>
         <span class="found">live: <span class="good">https://mythwavestudios.com/privacy.html</span>  ✓
 matches: Play "No data collected" · Apple "Data Not Collected"</span>
@@ -250,7 +250,7 @@ guide: docs/store/data-safety-answers.md</span>
       <input type="checkbox" class="box" checked>
       <div class="body">
         <div class="title"><span class="donetag">✓ Done</span> Android application ID set to valid reverse-DNS</div>
-        <p class="detail">Package fields rewritten to a valid, lowercase reverse-domain ID. This is the permanent-on-publish identifier — matched to iOS.</p>
+        <p class="detail">Package fields rewritten to a valid, lowercase reverse-domain ID. This is the permanent-on-publish identifier, matched to iOS.</p>
         <span class="found">was: <span class="bad">MythwaveStudios.MythwaveStudios.OceanRivals</span>
 now: <span class="good">com.mythwavestudios.oceanrivals</span>  ✓ (domain=com, company=mythwavestudios, product=oceanrivals)</span>
         <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span></div>
@@ -261,7 +261,7 @@ now: <span class="good">com.mythwavestudios.oceanrivals</span>  ✓ (domain=com,
       <input type="checkbox" class="box" checked>
       <div class="body">
         <div class="title"><span class="donetag">✓ Done</span> Bluetooth permission &amp; gamepad support disabled</div>
-        <p class="detail">Both turned off — no more Bluetooth runtime prompt or extra Data-Safety question. Re-enable only if BT controllers become a real feature.</p>
+        <p class="detail">Both turned off, so no more Bluetooth runtime prompt or extra Data-Safety question. Re-enable only if BT controllers become a real feature.</p>
         <span class="found">option_android_permission_bluetooth = <span class="good">false</span>  ✓
 option_android_gamepad_support       = <span class="good">false</span>  ✓</span>
         <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span></div>
@@ -272,7 +272,7 @@ option_android_gamepad_support       = <span class="good">false</span>  ✓</spa
       <input type="checkbox" class="box" checked>
       <div class="body">
         <div class="title"><span class="donetag">✓ Done</span> Android TV support disabled</div>
-        <p class="detail">Leanback and "is game" turned off — the app no longer opts into the Android TV track and its landscape/D-pad requirements.</p>
+        <p class="detail">Leanback and "is game" turned off, so the app no longer opts into the Android TV track and its landscape/D-pad requirements.</p>
         <span class="found">option_android_tv_isgame            = <span class="good">false</span>  ✓
 option_android_tv_supports_leanback = <span class="good">false</span>  ✓</span>
         <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span></div>
@@ -282,7 +282,7 @@ option_android_tv_supports_leanback = <span class="good">false</span>  ✓</span
     <label class="item sev-warn">
       <input type="checkbox" class="box">
       <div class="body">
-        <div class="title"><span class="sev-tag">Warning</span> Internet permission — confirm it's needed</div>
+        <div class="title"><span class="sev-tag">Warning</span> Internet permission: confirm it's needed</div>
         <p class="detail">If the game is fully offline, dropping INTERNET simplifies the Data-Safety declaration. Keep it only if ads, analytics, or online features are planned.</p>
         <span class="found">option_android_permission_internet = true</span>
         <div class="owner"><span class="otag fix">Project fix</span><span class="otag">Decision</span></div>
@@ -330,7 +330,7 @@ adaptive icon                  →  ${options_dir}/…       (customized ✓)</s
     <label class="item sev-ready">
       <input type="checkbox" class="box" checked>
       <div class="body">
-        <div class="title"><span class="sev-tag">Ready</span> Target SDK 35 &amp; 64-bit — meet current Play rules</div>
+        <div class="title"><span class="sev-tag">Ready</span> Target SDK 35 &amp; 64-bit: meets current Play rules</div>
         <p class="detail">Target/compile SDK 35 (Android 15) satisfies Play's 2025 requirement, and the arm64 build is 64-bit compliant. Orientation is locked to portrait, consistent with iOS.</p>
         <span class="found">target_sdk = 35   ·   arch_arm64 = true   ·   orient_portrait = true</span>
         <div class="owner"><span class="otag">No action</span></div>
@@ -345,7 +345,7 @@ adaptive icon                  →  ${options_dir}/…       (customized ✓)</s
     <label class="item sev-block done">
       <input type="checkbox" class="box" checked>
       <div class="body">
-        <div class="title"><span class="donetag">✓ Done</span> Bundle ID set — matches Android</div>
+        <div class="title"><span class="donetag">✓ Done</span> Bundle ID set, matches Android</div>
         <p class="detail">Placeholder replaced with the real reverse-DNS ID. Still to do on Apple's side: register this exact string as an App ID in your Developer account.</p>
         <span class="found">was: <span class="bad">com.company.game</span>
 now: <span class="good">com.mythwavestudios.oceanrivals</span>  ✓</span>
@@ -357,7 +357,7 @@ now: <span class="good">com.mythwavestudios.oceanrivals</span>  ✓</span>
       <input type="checkbox" class="box">
       <div class="body">
         <div class="title"><span class="sev-tag">Blocker</span> iOS icons &amp; launch screen are all defaults</div>
-        <p class="detail">Every iOS icon and the launch screen resolve to <code>${base_options_dir}</code> — there are <span class="k">no custom iOS image files in the project</span>. Apple rejects apps that ship the placeholder icon. Needs the full icon set incl. the 1024px App Store artwork, plus a launch screen.</p>
+        <p class="detail">Every iOS icon and the launch screen resolve to <code>${base_options_dir}</code>, so there are <span class="k">no custom iOS image files in the project</span>. Apple rejects apps that ship the placeholder icon. Needs the full icon set incl. the 1024px App Store artwork, plus a launch screen.</p>
         <span class="found">option_ios_icon_* + launchscreen  →  ${base_options_dir}/ios/…  (all defaults)
 project files under options/ios/    →  none found</span>
         <div class="owner"><span class="otag">Assets</span></div>
@@ -388,8 +388,8 @@ project files under options/ios/    →  none found</span>
       <input type="checkbox" class="box" checked>
       <div class="body">
         <div class="title"><span class="donetag">✓ Decided</span> Shipping universal (iPhone + iPad)</div>
-        <p class="detail">Decision made: keep universal. Two consequences carry into the setup gates — you'll need <span class="k">iPad screenshots</span> and must verify the portrait UI holds on iPad's aspect ratio.</p>
-        <span class="found">option_ios_devices = 2  (iPhone + iPad)  — kept</span>
+        <p class="detail">Decision made: keep universal. Two consequences carry into the setup gates: you'll need <span class="k">iPad screenshots</span> and must verify the portrait UI holds on iPad's aspect ratio.</p>
+        <span class="found">option_ios_devices = 2  (iPhone + iPad), kept</span>
         <div class="owner"><span class="otag">Decision made</span><span class="otag">Verify iPad layout</span></div>
       </div>
     </label>
@@ -407,7 +407,7 @@ project files under options/ios/    →  none found</span>
       <input type="checkbox" class="box">
       <div class="body">
         <div class="title"><span class="sev-tag">Setup</span> Apple Developer Program + Team ID + signing</div>
-        <p class="detail">$99/yr membership. The project's Team ID field is empty — set it for signing. You'll also need a distribution certificate and provisioning profile (managed in Xcode).</p>
+        <p class="detail">$99/yr membership. The project's Team ID field is empty, so set it for signing. You'll also need a distribution certificate and provisioning profile (managed in Xcode).</p>
         <span class="found">option_ios_team_id = <span class="bad">"" (empty)</span></span>
         <div class="owner"><span class="otag">Account/Tools</span></div>
       </div>
@@ -435,7 +435,7 @@ project files under options/ios/    →  none found</span>
       <input type="checkbox" class="box" checked>
       <div class="body">
         <div class="title"><span class="sev-tag">Ready</span> Orientation locked to portrait</div>
-        <p class="detail">iOS is portrait-only and matches Android — no conflicting orientation metadata to reconcile.</p>
+        <p class="detail">iOS is portrait-only and matches Android, with no conflicting orientation metadata to reconcile.</p>
         <span class="found">option_ios_orientation_portrait = true  (landscape off)</span>
         <div class="owner"><span class="otag">No action</span></div>
       </div>
@@ -443,7 +443,7 @@ project files under options/ios/    →  none found</span>
   </section>
 
   <div class="callout">
-    <h3>✓ Applied to the project — on cleanup/unused-assets (pushed)</h3>
+    <h3>✓ Applied to the project, on cleanup/unused-assets (pushed)</h3>
     <p style="margin:0;color:var(--ink-soft)">All the config-level fixes are committed to the <code>.yy</code> option files, no game code touched:</p>
     <ul>
       <li>iOS display name <code>Ship war2 → Ocean Rivals</code></li>
@@ -454,12 +454,12 @@ project files under options/ios/    →  none found</span>
     </ul>
     <p style="margin:14px 0 6px;color:var(--ink);font-weight:600">Remaining critical path (yours):</p>
     <ul>
-      <li><b>Icons</b> — one branded 1024px master → full iOS icon set + Android splash/legacy icons <em>(the one hard blocker left)</em></li>
-      <li><b>Accounts &amp; tools</b> — Play ($25) &amp; Apple ($99) accounts, iOS Team ID, a Mac with Xcode, signing</li>
-      <li><b>Console forms</b> — privacy policy, Data-Safety / App-Privacy, age rating, screenshots, descriptions</li>
-      <li><b>Build config</b> — output <code>.aab</code> for Play; set iOS export-compliance flag</li>
+      <li><b>Icons:</b> one branded 1024px master → full iOS icon set + Android splash/legacy icons <em>(the one hard blocker left)</em></li>
+      <li><b>Accounts &amp; tools:</b> Play ($25) &amp; Apple ($99) accounts, iOS Team ID, a Mac with Xcode, signing</li>
+      <li><b>Console forms:</b> privacy policy, Data-Safety / App-Privacy, age rating, screenshots, descriptions</li>
+      <li><b>Build config:</b> output <code>.aab</code> for Play; set iOS export-compliance flag</li>
     </ul>
-    <p style="margin:12px 0 0;color:var(--ink-soft)">I can draft the privacy-policy text, store descriptions, and Data-Safety answers, and spec exact icon sizes for whoever makes the art — just say the word.</p>
+    <p style="margin:12px 0 0;color:var(--ink-soft)">I can draft the privacy-policy text, store descriptions, and Data-Safety answers, and spec exact icon sizes for whoever makes the art. Just say the word.</p>
   </div>
 
   <footer>
