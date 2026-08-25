@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Ocean Rivals Launch Manifest</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#eef2f0; --surface:#ffffff; --surface-2:#e7ece9; --line:#d3dcd7;
+    --ink:#0f2129; --ink-soft:#42565e; --ink-faint:#6f8188;
+    --brass:#a9761f; --brass-bright:#c69140;
+    --blocker:#c8402c; --warning:#b3760f; --setup:#2f7d93; --ready:#2f8663;
+    --blocker-bg:#fbe9e5; --warning-bg:#f9f0dd; --setup-bg:#e2f0f3; --ready-bg:#e2f2ea;
+    --shadow:0 1px 2px rgba(15,33,41,.06),0 8px 24px rgba(15,33,41,.06);
+    --radius:10px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0a1820; --surface:#102631; --surface-2:#0d2029; --line:#20404d;
+      --ink:#e7eeec; --ink-soft:#a7bcc2; --ink-faint:#6f8a92;
+      --brass:#d9a24b; --brass-bright:#e8b866;
+      --blocker:#f0715c; --warning:#e7ab48; --setup:#63c0d6; --ready:#63c99e;
+      --blocker-bg:#2c1512; --warning-bg:#2a2110; --setup-bg:#0e2a31; --ready-bg:#0f2a20;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0a1820; --surface:#102631; --surface-2:#0d2029; --line:#20404d;
+    --ink:#e7eeec; --ink-soft:#a7bcc2; --ink-faint:#6f8a92;
+    --brass:#d9a24b; --brass-bright:#e8b866;
+    --blocker:#f0715c; --warning:#e7ab48; --setup:#63c0d6; --ready:#63c99e;
+    --blocker-bg:#2c1512; --warning-bg:#2a2110; --setup-bg:#0e2a31; --ready-bg:#0f2a20;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif; font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px; margin:0 auto; padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px)}
+  code,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+  /* ---- header ---- */
+  .eyebrow{
+    font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.22em;
+    font-size:.72rem; font-weight:600; color:var(--brass);
+    display:flex; align-items:center; gap:.6em; margin:0 0 14px;
+  }
+  .eyebrow::before{content:""; width:26px; height:2px; background:var(--brass)}
+  h1{
+    font-family:"Oswald",sans-serif; font-weight:700; letter-spacing:.01em;
+    font-size:clamp(2.1rem,6vw,3.4rem); line-height:1.02; margin:0; text-wrap:balance;
+    text-transform:uppercase;
+  }
+  h1 .thin{font-weight:400; color:var(--ink-soft)}
+  .lede{max-width:64ch; color:var(--ink-soft); margin:14px 0 0; font-size:1.02rem}
+  .meta{margin-top:16px; font-size:.8rem; color:var(--ink-faint); display:flex; flex-wrap:wrap; gap:6px 18px}
+  .meta b{color:var(--ink-soft); font-weight:600}
+
+  /* ---- summary tiles ---- */
+  .tiles{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:34px 0 8px}
+  @media(max-width:620px){.tiles{grid-template-columns:repeat(2,1fr)}}
+  .tile{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:16px 16px 14px; position:relative; overflow:hidden; box-shadow:var(--shadow);
+  }
+  .tile::before{content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--c)}
+  .tile .n{font-family:"Oswald",sans-serif; font-size:2.5rem; font-weight:700; line-height:1; color:var(--c); font-variant-numeric:tabular-nums}
+  .tile .lab{font-size:.74rem; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-soft); margin-top:8px; font-weight:600}
+  .t-block{--c:var(--blocker)} .t-warn{--c:var(--warning)} .t-setup{--c:var(--setup)} .t-ready{--c:var(--ready)}
+  .progress{height:8px; border-radius:100px; background:var(--surface-2); border:1px solid var(--line); overflow:hidden; margin:16px 0 8px}
+  .progress span{display:block; height:100%; background:linear-gradient(90deg,var(--ready),var(--brass-bright)); border-radius:100px}
+  .progress-cap{font-size:.82rem; color:var(--ink-faint); margin:0}
+  .donetag{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.09em; font-size:.64rem; font-weight:600; padding:2px 7px; border-radius:4px; color:#06231a; background:var(--ready)}
+  :root:not([data-theme="light"]) .donetag{color:#06231a}
+
+  /* ---- legend ---- */
+  .legend{display:flex; flex-wrap:wrap; gap:8px 10px; margin:22px 0 6px; font-size:.78rem}
+  .chip{
+    display:inline-flex; align-items:center; gap:.5em; padding:4px 10px; border-radius:100px;
+    border:1px solid var(--line); background:var(--surface); color:var(--ink-soft); font-weight:500;
+    white-space:nowrap;
+  }
+  .dot{width:9px; height:9px; border-radius:50%; flex:none}
+  .d-block{background:var(--blocker)} .d-warn{background:var(--warning)} .d-setup{background:var(--setup)} .d-ready{background:var(--ready)}
+
+  /* ---- section ---- */
+  section{margin-top:40px}
+  .sec-head{display:flex; align-items:baseline; gap:12px; border-bottom:2px solid var(--line); padding-bottom:10px; margin-bottom:4px}
+  .sec-head h2{
+    font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.06em;
+    font-size:1.35rem; font-weight:600; margin:0;
+  }
+  .sec-head .count{margin-left:auto; font-size:.78rem; color:var(--ink-faint); font-family:"IBM Plex Mono",monospace}
+
+  /* ---- item rows ---- */
+  .item{
+    display:grid; grid-template-columns:26px 1fr; gap:0 14px;
+    border:1px solid var(--line); border-left:4px solid var(--c,var(--line));
+    background:var(--surface); border-radius:var(--radius); padding:15px 17px; margin-top:12px;
+    box-shadow:var(--shadow); transition:opacity .18s ease;
+  }
+  .item.sev-block{--c:var(--blocker)} .item.sev-warn{--c:var(--warning)}
+  .item.sev-setup{--c:var(--setup)} .item.sev-ready{--c:var(--ready)}
+  .box{
+    appearance:none; -webkit-appearance:none; margin:2px 0 0; width:20px; height:20px;
+    border:2px solid var(--ink-faint); border-radius:6px; background:var(--surface-2);
+    cursor:pointer; position:relative; flex:none;
+  }
+  .box:checked{background:var(--ready); border-color:var(--ready)}
+  .box:checked::after{content:"✓"; position:absolute; inset:0; color:#fff; font-size:14px; font-weight:700; display:grid; place-items:center}
+  .box:focus-visible{outline:2px solid var(--brass-bright); outline-offset:2px}
+  .item.done{opacity:.5}
+  .item.done .title{text-decoration:line-through}
+  .body{min-width:0}
+  .title{font-weight:600; font-size:1.02rem; letter-spacing:.01em; display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+  .sev-tag{
+    font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.09em;
+    font-size:.64rem; font-weight:600; padding:2px 7px; border-radius:4px; color:#fff; background:var(--c);
+  }
+  .item.sev-warn .sev-tag{color:#231a06}
+  .item.sev-ready .sev-tag{color:#06231a}
+  .detail{color:var(--ink-soft); font-size:.93rem; margin:7px 0 0}
+  .detail .k{color:var(--ink); font-weight:600}
+  .found{
+    display:block; margin:9px 0 0; padding:8px 11px; border-radius:7px;
+    background:var(--surface-2); border:1px solid var(--line);
+    font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:var(--ink-soft);
+    overflow-x:auto; white-space:pre;
+  }
+  .found .bad{color:var(--blocker); font-weight:500}
+  .found .good{color:var(--ready); font-weight:500}
+  .owner{margin:10px 0 0; display:flex; flex-wrap:wrap; gap:6px}
+  .otag{font-size:.72rem; padding:3px 9px; border-radius:100px; border:1px solid var(--line); color:var(--ink-soft); background:var(--surface)}
+  .otag.fix{border-color:var(--brass); color:var(--brass); font-weight:600}
+
+  .callout{
+    margin-top:38px; background:var(--surface); border:1px solid var(--brass);
+    border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow); position:relative;
+  }
+  .callout h3{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.06em; margin:0 0 8px; font-size:1.05rem; color:var(--brass)}
+  .callout ul{margin:8px 0 0; padding-left:20px; color:var(--ink-soft)}
+  .callout li{margin:5px 0}
+  .callout code{background:var(--surface-2); padding:1px 6px; border-radius:4px; font-size:.85em; color:var(--ink)}
+
+  footer{margin-top:44px; padding-top:18px; border-top:1px solid var(--line); font-size:.78rem; color:var(--ink-faint)}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">MythwaveStudios · Submission Readiness</p>
+    <h1>Ocean Rivals <span class="thin">Launch Manifest</span></h1>
+    <p class="lede">Every gate between the current build and a live listing on Google Play and the Apple App Store — read straight from the project's platform config, sorted by what stops a submission and who owns the fix.</p>
+    <div class="meta">
+      <span><b>Source:</b> options/android · options/ios · options/main</span>
+      <span><b>Build ver:</b> 1.0.0.0</span>
+      <span><b>Audited:</b> 2026-08-25</span>
+      <span><b>Updated:</b> 2026-08-25 · config fixes applied</span>
+    </div>
+  </header>
+
+  <div class="tiles">
+    <div class="tile t-ready"><div class="n">13</div><div class="lab">Done</div></div>
+    <div class="tile t-block"><div class="n">2</div><div class="lab">Blockers left</div></div>
+    <div class="tile t-warn"><div class="n">4</div><div class="lab">Warnings left</div></div>
+    <div class="tile t-setup"><div class="n">5</div><div class="lab">Setup gates left</div></div>
+  </div>
+  <div class="progress" role="img" aria-label="13 of 24 items done"><span style="width:54.2%"></span></div>
+  <p class="progress-cap">13 of 24 cleared &middot; everything writeable is done (config, privacy, support, store copy, data-safety, age rating) &middot; remaining work is icon art, accounts &amp; screenshots</p>
+
+  <div class="legend">
+    <span class="chip"><span class="dot d-block"></span>Blocker — fails review or is permanent if wrong</span>
+    <span class="chip"><span class="dot d-warn"></span>Warning — likely rejection / quality</span>
+    <span class="chip"><span class="dot d-setup"></span>Setup — account, asset or console gate</span>
+    <span class="chip"><span class="dot d-ready"></span>Ready — already correct</span>
+  </div>
+  <p style="font-size:.82rem;color:var(--ink-faint);margin:10px 0 0">Owner chips: <b style="color:var(--brass)">Project fix</b> = I can edit the <code>.yy</code> files now · <b>Decision</b> = needs your call · <b>Console</b> = Play/App Store Connect · <b>Account/Tools</b> = memberships, Mac/Xcode, signing · <b>Assets</b> = art, copy, screenshots. Tap a checkbox to mark a gate cleared (this session).</p>
+
+  <!-- ============ CROSS PLATFORM ============ -->
+  <section>
+    <div class="sec-head"><h2>Cross-platform</h2><span class="count">both stores</span></div>
+
+    <label class="item sev-block done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Done</span> App name unified across platforms</div>
+        <p class="detail">iOS display name updated to match Android — both now ship as <span class="k">Ocean Rivals</span>.</p>
+        <span class="found">android · option_android_display_name = <span class="good">"Ocean Rivals"</span>
+ios     · option_ios_display_name     = <span class="good">"Ocean Rivals"</span>  ✓</span>
+        <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-block">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Blocker</span> Custom app icon (1024×1024 master)</div>
+        <p class="detail">A single high-res master icon feeds every size on both stores. iOS currently has <span class="k">no icon files in the project at all</span> (see the Apple section) and Android's legacy icon is the GameMaker default. You need one branded 1024px icon, then the export tooling can derive the rest.</p>
+        <div class="owner"><span class="otag">Assets</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-setup done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Done</span> Privacy policy — written &amp; live</div>
+        <p class="detail">Drafted from the actual code (offline, no data collected), styled to the MythWave site, and published on your own domain. Paste this URL into both store consoles.</p>
+        <span class="found">live: <span class="good">https://mythwavestudios.com/privacy.html</span>  ✓
+matches: Play "No data collected" · Apple "Data Not Collected"</span>
+        <div class="owner"><span class="otag fix">Published · mythwave-site</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-setup done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Done</span> Data-safety / App-Privacy answers prepared</div>
+        <p class="detail">Verified from the code: no analytics, ads, accounts, or data SDKs, so both forms resolve to "no data collected." The exact click-through for each console is written up; you just enter it.</p>
+        <span class="found">Play Data safety: No data collected / No data shared
+Apple App Privacy: Data Not Collected
+guide: docs/store/data-safety-answers.md</span>
+        <div class="owner"><span class="otag fix">Answers prepared</span><span class="otag">Enter in console</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-setup done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Done</span> Age / content rating answers prepared</div>
+        <p class="detail">Content reviewed from the code: mild fantasy ship combat, no blood, gambling, substances, or purchases. Both questionnaires are pre-filled question by question; expected around ESRB E10+ / PEGI 7 / Apple 9+.</p>
+        <span class="found">guide: docs/store/age-rating-answers.md</span>
+        <div class="owner"><span class="otag fix">Answers prepared</span><span class="otag">Enter in console</span></div>
+      </div>
+    </label>
+  </section>
+
+  <!-- ============ GOOGLE PLAY ============ -->
+  <section>
+    <div class="sec-head"><h2>Google Play</h2><span class="count">android target</span></div>
+
+    <label class="item sev-block done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Done</span> Android application ID set to valid reverse-DNS</div>
+        <p class="detail">Package fields rewritten to a valid, lowercase reverse-domain ID. This is the permanent-on-publish identifier — matched to iOS.</p>
+        <span class="found">was: <span class="bad">MythwaveStudios.MythwaveStudios.OceanRivals</span>
+now: <span class="good">com.mythwavestudios.oceanrivals</span>  ✓ (domain=com, company=mythwavestudios, product=oceanrivals)</span>
+        <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-warn done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Done</span> Bluetooth permission &amp; gamepad support disabled</div>
+        <p class="detail">Both turned off — no more Bluetooth runtime prompt or extra Data-Safety question. Re-enable only if BT controllers become a real feature.</p>
+        <span class="found">option_android_permission_bluetooth = <span class="good">false</span>  ✓
+option_android_gamepad_support       = <span class="good">false</span>  ✓</span>
+        <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-warn done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Done</span> Android TV support disabled</div>
+        <p class="detail">Leanback and "is game" turned off — the app no longer opts into the Android TV track and its landscape/D-pad requirements.</p>
+        <span class="found">option_android_tv_isgame            = <span class="good">false</span>  ✓
+option_android_tv_supports_leanback = <span class="good">false</span>  ✓</span>
+        <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-warn">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Warning</span> Internet permission — confirm it's needed</div>
+        <p class="detail">If the game is fully offline, dropping INTERNET simplifies the Data-Safety declaration. Keep it only if ads, analytics, or online features are planned.</p>
+        <span class="found">option_android_permission_internet = true</span>
+        <div class="owner"><span class="otag fix">Project fix</span><span class="otag">Decision</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-warn">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Warning</span> Splash & legacy icons are GameMaker defaults</div>
+        <p class="detail">The adaptive icon is customized, but the splash screen and the legacy (pre-Android-8) icons still point at the runtime's default assets. Brand them so no build ships the stock GameMaker art.</p>
+        <span class="found">splash + option_android_icon_*  →  ${base_options_dir}/…  (defaults)
+adaptive icon                  →  ${options_dir}/…       (customized ✓)</span>
+        <div class="owner"><span class="otag">Assets</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-warn">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Warning</span> Ship an App Bundle (.aab), not an APK</div>
+        <p class="detail">Play requires the Android App Bundle format for new apps. Confirm the GameMaker build target outputs <span class="k">.aab</span> (set at build time, not in this file).</p>
+        <div class="owner"><span class="otag">Build config</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-setup">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Setup</span> Play Console account + Play App Signing</div>
+        <p class="detail">One-time $25 Google Play Developer registration, then enroll in Play App Signing (Google holds the app signing key; you keep an upload key).</p>
+        <div class="owner"><span class="otag">Account/Tools</span><span class="otag">Console</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-setup">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Setup</span> Store listing assets</div>
+        <p class="detail">Feature graphic (1024×500), at least 2 phone screenshots, app title, short + full description. Portrait screenshots straight from the device work well here.</p>
+        <div class="owner"><span class="otag">Assets</span><span class="otag">Console</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-ready">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="sev-tag">Ready</span> Target SDK 35 &amp; 64-bit — meet current Play rules</div>
+        <p class="detail">Target/compile SDK 35 (Android 15) satisfies Play's 2025 requirement, and the arm64 build is 64-bit compliant. Orientation is locked to portrait, consistent with iOS.</p>
+        <span class="found">target_sdk = 35   ·   arch_arm64 = true   ·   orient_portrait = true</span>
+        <div class="owner"><span class="otag">No action</span></div>
+      </div>
+    </label>
+  </section>
+
+  <!-- ============ APPLE APP STORE ============ -->
+  <section>
+    <div class="sec-head"><h2>Apple App Store</h2><span class="count">ios target</span></div>
+
+    <label class="item sev-block done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Done</span> Bundle ID set — matches Android</div>
+        <p class="detail">Placeholder replaced with the real reverse-DNS ID. Still to do on Apple's side: register this exact string as an App ID in your Developer account.</p>
+        <span class="found">was: <span class="bad">com.company.game</span>
+now: <span class="good">com.mythwavestudios.oceanrivals</span>  ✓</span>
+        <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span><span class="otag">Console (register App ID)</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-block">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Blocker</span> iOS icons &amp; launch screen are all defaults</div>
+        <p class="detail">Every iOS icon and the launch screen resolve to <code>${base_options_dir}</code> — there are <span class="k">no custom iOS image files in the project</span>. Apple rejects apps that ship the placeholder icon. Needs the full icon set incl. the 1024px App Store artwork, plus a launch screen.</p>
+        <span class="found">option_ios_icon_* + launchscreen  →  ${base_options_dir}/ios/…  (all defaults)
+project files under options/ios/    →  none found</span>
+        <div class="owner"><span class="otag">Assets</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-block done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Done</span> Build number set to 1</div>
+        <p class="detail">Now a valid starting build number. Remember to increment it on every subsequent upload.</p>
+        <span class="found">option_ios_build_number = <span class="good">1</span>  ✓</span>
+        <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-warn done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Done</span> Minimum iOS raised to 13.0</div>
+        <p class="detail">A modern deployment floor. Still build against the current iOS SDK (latest Xcode) at archive time, which Apple requires.</p>
+        <span class="found">option_ios_min_version = <span class="good">13.0</span>  ✓</span>
+        <div class="owner"><span class="otag fix">Applied · cleanup/unused-assets</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-warn done">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="donetag">✓ Decided</span> Shipping universal (iPhone + iPad)</div>
+        <p class="detail">Decision made: keep universal. Two consequences carry into the setup gates — you'll need <span class="k">iPad screenshots</span> and must verify the portrait UI holds on iPad's aspect ratio.</p>
+        <span class="found">option_ios_devices = 2  (iPhone + iPad)  — kept</span>
+        <div class="owner"><span class="otag">Decision made</span><span class="otag">Verify iPad layout</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-warn">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Warning</span> Export-compliance / encryption key</div>
+        <p class="detail">Apple asks about encryption on every upload. If the app uses only standard HTTPS (or nothing), declare <code>ITSAppUsesNonExemptEncryption = false</code> to skip the compliance documentation each build.</p>
+        <div class="owner"><span class="otag">Console</span><span class="otag">Build config</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-setup">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Setup</span> Apple Developer Program + Team ID + signing</div>
+        <p class="detail">$99/yr membership. The project's Team ID field is empty — set it for signing. You'll also need a distribution certificate and provisioning profile (managed in Xcode).</p>
+        <span class="found">option_ios_team_id = <span class="bad">"" (empty)</span></span>
+        <div class="owner"><span class="otag">Account/Tools</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-setup">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Setup</span> A Mac with Xcode to archive &amp; upload</div>
+        <p class="detail">GameMaker exports an Xcode project; you archive it in Xcode (or upload the build via Transporter) to reach App Store Connect. There's no Windows-only path to the App Store.</p>
+        <div class="owner"><span class="otag">Account/Tools</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-setup">
+      <input type="checkbox" class="box">
+      <div class="body">
+        <div class="title"><span class="sev-tag">Setup</span> App Store listing assets</div>
+        <p class="detail">Screenshots for the required iPhone display sizes (6.7"/6.5"), plus iPad sizes if universal, and the description / keywords / support URL.</p>
+        <div class="owner"><span class="otag">Assets</span><span class="otag">Console</span></div>
+      </div>
+    </label>
+
+    <label class="item sev-ready">
+      <input type="checkbox" class="box" checked>
+      <div class="body">
+        <div class="title"><span class="sev-tag">Ready</span> Orientation locked to portrait</div>
+        <p class="detail">iOS is portrait-only and matches Android — no conflicting orientation metadata to reconcile.</p>
+        <span class="found">option_ios_orientation_portrait = true  (landscape off)</span>
+        <div class="owner"><span class="otag">No action</span></div>
+      </div>
+    </label>
+  </section>
+
+  <div class="callout">
+    <h3>✓ Applied to the project — on cleanup/unused-assets (pushed)</h3>
+    <p style="margin:0;color:var(--ink-soft)">All the config-level fixes are committed to the <code>.yy</code> option files, no game code touched:</p>
+    <ul>
+      <li>iOS display name <code>Ship war2 → Ocean Rivals</code></li>
+      <li>Android application ID → <code>com.mythwavestudios.oceanrivals</code></li>
+      <li>iOS bundle ID <code>com.company.game → com.mythwavestudios.oceanrivals</code></li>
+      <li>iOS build number <code>0 → 1</code>; min iOS <code>10.0 → 13.0</code></li>
+      <li>Disabled Bluetooth permission, gamepad support, and Android TV support</li>
+    </ul>
+    <p style="margin:14px 0 6px;color:var(--ink);font-weight:600">Remaining critical path (yours):</p>
+    <ul>
+      <li><b>Icons</b> — one branded 1024px master → full iOS icon set + Android splash/legacy icons <em>(the one hard blocker left)</em></li>
+      <li><b>Accounts &amp; tools</b> — Play ($25) &amp; Apple ($99) accounts, iOS Team ID, a Mac with Xcode, signing</li>
+      <li><b>Console forms</b> — privacy policy, Data-Safety / App-Privacy, age rating, screenshots, descriptions</li>
+      <li><b>Build config</b> — output <code>.aab</code> for Play; set iOS export-compliance flag</li>
+    </ul>
+    <p style="margin:12px 0 0;color:var(--ink-soft)">I can draft the privacy-policy text, store descriptions, and Data-Safety answers, and spec exact icon sizes for whoever makes the art — just say the word.</p>
+  </div>
+
+  <footer>
+    Generated from the Ocean Rivals GameMaker project's platform configuration (options/android, options/ios, options/main) on 2026-08-25. Requirements reflect Google Play &amp; Apple App Store submission rules as of that date; verify current console requirements at submission time. Not affiliated with Google or Apple.
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll(".item .box").forEach(function(b){
+    b.addEventListener("change",function(){
+      b.closest(".item").classList.toggle("done", b.checked);
+    });
+  });
+</script>
+</body>
+</html>
