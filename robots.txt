@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mythwavestudios.com/sitemap.xml
