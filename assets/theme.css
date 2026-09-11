@@ -1,0 +1,58 @@
+/* MythWave type and polish layer. Loaded after site.css so it wins on equal specificity. */
+
+:root{
+  --display:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --label:'Cinzel',Georgia,'Times New Roman',serif;
+  --body:'Source Sans 3','Trebuchet MS',Arial,sans-serif;
+}
+
+/* ---- body ---- */
+body{font-family:var(--body);font-size:17px;line-height:1.65}
+.lead-copy{font-size:1.25rem;line-height:1.6}
+
+/* ---- display: Cormorant sits small on the em box, so every size gets a bump ---- */
+h1,h2,h3,.team-list h2{font-family:var(--display);font-weight:500;letter-spacing:0;line-height:1.08}
+h1{font-size:clamp(3.2rem,7vw,6.8rem)}
+.home-hero-copy h1{font-size:clamp(3.4rem,7.4vw,7.4rem)}
+.game-hero h1{font-size:clamp(2.7rem,5.2vw,5.2rem);line-height:1.05}
+.page-intro h1{font-size:clamp(3rem,6.5vw,6.2rem)}
+h2{font-size:clamp(2.3rem,4vw,3.8rem);line-height:1.1}
+.legal-page h2{font-size:2.1rem;margin:40px 0 14px}
+.team-list h2{font-size:clamp(1.9rem,3.4vw,2.8rem)}
+h3{font-family:var(--display);font-weight:600;line-height:1.2}
+.game-card h3{font-size:1.75rem}
+.region h3{font-size:1.9rem}
+.feature-grid h3,.history-grid h3{font-size:1.6rem}
+h1 em,h2 em{font-style:italic;font-weight:500}
+.hero-slogan{font-family:var(--display);font-style:italic;font-size:clamp(1.15rem,3.4vw,1.45rem);letter-spacing:.01em}
+.feature-number{font-family:var(--display);font-style:italic;font-size:1.7rem}
+
+/* ---- labels: Cinzel carries the brand voice from the logo ---- */
+.eyebrow,.wordmark,.wordmark small,.footer-wordmark,.desktop-nav a,.static-mobile-menu nav a,
+.hero-foot,.region-number,.button,.status,.back-link,.store-placeholder{font-family:var(--label)}
+.eyebrow{font-size:.68rem;font-weight:600;letter-spacing:.28em}
+.wordmark{font-size:1.15rem;letter-spacing:.12em;font-weight:600}
+.wordmark small{font:600 .5rem/1.5 var(--label);letter-spacing:.5em}
+.footer-wordmark{font-size:1.15rem;letter-spacing:.14em;font-weight:600}
+.desktop-nav a{font-size:.72rem;letter-spacing:.08em;font-weight:600}
+.static-mobile-menu nav a{font-size:.85rem;letter-spacing:.06em;font-weight:600}
+.hero-foot{font-size:.62rem;letter-spacing:.24em}
+.button{font-size:.78rem;letter-spacing:.1em;font-weight:600}
+.status{font-size:.62rem;letter-spacing:.08em;font-weight:600;padding:6px 12px}
+.back-link{font-size:.72rem;letter-spacing:.1em;font-weight:600}
+
+/* ---- game hero: soften UI screenshots used as backdrops ---- */
+.game-hero-scene.hero-scene-soft{filter:blur(22px) saturate(.85);transform:scale(1.15);opacity:.3}
+
+/* ---- about page: the logo file has a white ground, so show it as the studio badge ---- */
+.about-grid>img{width:min(100%,400px);height:auto;border-radius:50%;justify-self:center;background:#fff;padding:13%;box-sizing:border-box;
+  box-shadow:0 0 0 1px var(--border),0 0 0 14px #0b2332,0 0 0 15px var(--border),0 40px 80px #0009}
+
+/* ---- release line replaces the store placeholders ---- */
+.release-line{color:var(--muted-foreground);max-width:620px;margin:0 0 26px}
+
+/* ---- motion: the hero drift is the only ambient animation; honour reduced motion ---- */
+@media (prefers-reduced-motion:reduce){
+  .hero-scene{animation:none}
+  .game-card,.button{transition:none}
+}
