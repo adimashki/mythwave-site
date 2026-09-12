@@ -44,9 +44,9 @@ h1 em,h2 em{font-style:italic;font-weight:500}
 /* ---- game hero: soften UI screenshots used as backdrops ---- */
 .game-hero-scene.hero-scene-soft{filter:blur(22px) saturate(.85);transform:scale(1.15);opacity:.3}
 
-/* ---- about page: the logo file has a white ground, so show it as the studio badge ---- */
-.about-grid>img{width:min(100%,400px);height:auto;border-radius:50%;justify-self:center;background:#fff;padding:13%;box-sizing:border-box;
-  box-shadow:0 0 0 1px var(--border),0 0 0 14px #0b2332,0 0 0 15px var(--border),0 40px 80px #0009}
+/* ---- logo: transparent lockup, so no white badge anywhere ---- */
+.wordmark img{background:none;border-radius:0;object-fit:contain;width:60px;height:60px}
+.about-grid>img{background:none;width:min(100%,440px);height:auto;justify-self:center;align-self:center;filter:drop-shadow(0 24px 40px #0008)}
 
 /* ---- release line replaces the store placeholders ---- */
 .release-line{color:var(--muted-foreground);max-width:620px;margin:0 0 26px}
