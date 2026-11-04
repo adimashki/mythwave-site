@@ -1,4 +1,4 @@
-import { config } from './config.js';
+import { settings as config } from './settings.js';
 
 export const BLOOD_TYPES = ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+'];
 const DAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];

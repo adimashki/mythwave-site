@@ -1,0 +1,98 @@
+# Builds the Cruor Android demo APK (on-device data, no server needed).
+# Download it from the run's "Artifacts" section, or from the "cruor-latest" release.
+# When Cruor moves to its own repository, move this file there and drop the
+# `cruor/` prefixes and the working-directory default.
+name: Cruor Android APK
+
+on:
+  push:
+    paths:
+      - 'cruor/**'
+      - '.github/workflows/cruor-android.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write # to publish the APK to the "cruor-latest" release
+
+concurrency:
+  group: cruor-android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: cruor
+    env:
+      CRUOR_VERSION_CODE: ${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: cruor/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Install
+        run: npm ci
+
+      - name: Test (server and on-device stacks)
+        run: npm test
+
+      - name: Build web bundle and sync Android project
+        run: npm run android:sync
+
+      - name: Decode signing key (optional)
+        id: key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.CRUOR_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/cruor.keystore"
+            echo "path=$RUNNER_TEMP/cruor.keystore" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build APK
+        working-directory: cruor/android
+        env:
+          CRUOR_KEYSTORE_PATH: ${{ steps.key.outputs.path }}
+          CRUOR_KEYSTORE_PASSWORD: ${{ secrets.CRUOR_KEYSTORE_PASSWORD }}
+          CRUOR_KEY_ALIAS: ${{ secrets.CRUOR_KEY_ALIAS }}
+          CRUOR_KEY_PASSWORD: ${{ secrets.CRUOR_KEY_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          if [ -n "$CRUOR_KEYSTORE_PATH" ]; then
+            ./gradlew --no-daemon assembleRelease
+            cp app/build/outputs/apk/release/app-release.apk "$RUNNER_TEMP/cruor.apk"
+          else
+            ./gradlew --no-daemon assembleDebug
+            cp app/build/outputs/apk/debug/app-debug.apk "$RUNNER_TEMP/cruor.apk"
+          fi
+          mv "$RUNNER_TEMP/cruor.apk" "$GITHUB_WORKSPACE/cruor-0.1.${{ github.run_number }}.apk"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cruor-apk
+          path: cruor-0.1.${{ github.run_number }}.apk
+          if-no-files-found: error
+
+      - name: Publish to the "cruor-latest" release
+        working-directory: .
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete cruor-latest --yes --cleanup-tag 2>/dev/null || true
+          gh release create cruor-latest "cruor-0.1.${{ github.run_number }}.apk" \
+            --target "${{ github.sha }}" --prerelease \
+            --title "Cruor demo APK (build ${{ github.run_number }})" \
+            --notes "On-device demo build from ${{ github.ref_name }} @ ${GITHUB_SHA::7}. Install on Android (allow installs from your browser/files app). All data stays on the phone."

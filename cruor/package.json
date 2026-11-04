@@ -4,12 +4,29 @@
   "private": true,
   "description": "Cruor — a trusted platform that makes blood donation easier, more engaging and more rewarding.",
   "type": "module",
-  "engines": { "node": ">=22.13" },
+  "engines": {
+    "node": ">=22.13"
+  },
   "scripts": {
     "start": "node --no-warnings=ExperimentalWarning src/server.js",
     "dev": "node --no-warnings=ExperimentalWarning --watch src/server.js",
-    "seed": "node --no-warnings=ExperimentalWarning src/seed.js --reset",
-    "test": "NODE_ENV=test node --no-warnings=ExperimentalWarning --test test/*.test.js"
+    "seed": "node --no-warnings=ExperimentalWarning src/seed-cli.js",
+    "test": "NODE_ENV=test node --no-warnings=ExperimentalWarning --test test/*.test.js",
+    "build:mobile": "node mobile/build.mjs",
+    "android:sync": "npm run build:mobile && cap sync android",
+    "android:apk": "npm run android:sync && cd android && ./gradlew assembleDebug"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@capacitor/android": "8.6.0",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/cli": "8.6.0",
+    "@capacitor/core": "8.6.0",
+    "@fontsource/fraunces": "5.3.0",
+    "@fontsource/inter": "5.3.0",
+    "@noble/ciphers": "2.4.0",
+    "@noble/hashes": "2.4.0",
+    "esbuild": "0.28.2",
+    "sql.js": "1.15.2"
+  }
 }

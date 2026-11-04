@@ -167,3 +167,9 @@ details summary { cursor: pointer; }
   #nav { width: 100%; justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; }
   #nav a, #nav button { white-space: nowrap; padding: .4rem .55rem; font-size: .85rem; }
 }
+
+.linklike { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+/* Respect Android status/navigation bars in the app shell. */
+.topbar { padding-top: max(.75rem, env(safe-area-inset-top), var(--safe-area-inset-top, 0px)); }
+.footer { padding-bottom: max(24px, env(safe-area-inset-bottom), var(--safe-area-inset-bottom, 0px)); }
+#toast { bottom: calc(24px + max(env(safe-area-inset-bottom), var(--safe-area-inset-bottom, 0px))); }

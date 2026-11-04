@@ -1,16 +1,14 @@
 // Demo data. All organisations below are fictional placeholders.
-import { pathToFileURL } from 'node:url';
-import { rmSync } from 'node:fs';
-import { blindIndex, encrypt, hashPassword, randomCode } from './security.js';
-import { config } from './config.js';
-import { openDb } from './db.js';
+// Platform-neutral: `sec` is the security implementation for the platform.
+import { settings as config } from './settings.js';
 
 const WEEKDAYS = { mon: ['08:00', '16:00'], tue: ['08:00', '16:00'], wed: ['08:00', '16:00'], thu: ['08:00', '18:00'], fri: ['08:00', '14:00'], sat: ['09:00', '13:00'] };
 const LONG = { mon: ['07:30', '19:00'], tue: ['07:30', '19:00'], wed: ['07:30', '19:00'], thu: ['07:30', '19:00'], fri: ['07:30', '19:00'], sat: ['09:00', '17:00'], sun: ['10:00', '14:00'] };
 
 export const DEMO_PASSWORD = 'cruor-demo-1';
 
-export async function seed(db) {
+export async function seed(db, sec) {
+  const { blindIndex, encrypt, hashPassword, randomCode } = sec;
   const ins = (sql, ...args) => Number(db.prepare(sql).run(...args).lastInsertRowid);
   const center = (name, kind, address, city, lat, lng, phone, hours, thankYou = null) =>
     ins(`INSERT INTO centers (name, kind, address, city, lat, lng, phone, hours_json, thank_you) VALUES (?,?,?,?,?,?,?,?,?)`,
@@ -69,13 +67,4 @@ export async function seed(db) {
   cause(ch1, 'school', 'School supplies', 'A backpack of school supplies for a child starting term.', 100);
   cause(ch3, 'environment', 'Plant a tree', 'One native tree planted and cared for through its first year.', 60);
   cause(ch1, 'gift', 'A holiday gift for a child', 'A wrapped gift for a child spending the holidays in hospital.', 150);
-}
-
-// `npm run seed` resets the local database and reseeds it.
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  if (process.argv.includes('--reset') && config.dbPath !== ':memory:') {
-    for (const suffix of ['', '-wal', '-shm']) rmSync(config.dbPath + suffix, { force: true });
-  }
-  await seed(openDb(config.dbPath));
-  console.log(`Seeded ${config.dbPath}. Demo password for all accounts: ${DEMO_PASSWORD}`);
 }

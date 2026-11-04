@@ -20,18 +20,26 @@ const store = {
   meta: null,
 };
 
-async function api(path, { method = 'GET', body } = {}) {
+// In the Android demo build, mobile/local-api.js provides an on-device backend.
+const local = window.cruorLocal || null;
+
+async function transport(path, method, body) {
+  if (local) return local.request({ method, url: path, body, token: store.token });
   const res = await fetch(path, {
     method,
     headers: { 'Content-Type': 'application/json', ...(store.token && { Authorization: `Bearer ${store.token}` }) },
     body: body ? JSON.stringify(body) : undefined,
   });
-  const data = await res.json().catch(() => ({}));
-  if (res.status === 401 && store.token) {
+  return { status: res.status, body: await res.json().catch(() => ({})) };
+}
+
+async function api(path, { method = 'GET', body } = {}) {
+  const { status, body: data } = await transport(path, method, body);
+  if (status === 401 && store.token) {
     store.token = null; store.user = null; renderNav();
     location.hash = '#/login';
   }
-  if (!res.ok) throw Object.assign(new Error(data.error || 'Request failed'), { data, status: res.status });
+  if (status < 200 || status >= 300) throw Object.assign(new Error(data.error || 'Request failed'), { data, status });
   return data;
 }
 
@@ -119,17 +127,33 @@ route('#/login', () => {
         <button class="btn block" type="submit">Sign in</button>
       </form>
       <p class="small muted mt">New here? <a href="#/register">Create an account</a></p>
-      <details class="small muted"><summary>Demo accounts</summary>
-        <p>donor@cruor.test · staff@cruor.test · admin@cruor.test<br>Password: <code>cruor-demo-1</code></p></details>
+      ${local ? `
+        <div class="notice accent mt stack-s">
+          <strong>Demo: try every role on this phone</strong>
+          <div class="row">
+            <button type="button" class="btn small" data-demo="donor">Donor</button>
+            <button type="button" class="btn small ghost" data-demo="staff">Blood bank staff</button>
+            <button type="button" class="btn small ghost" data-demo="admin">Admin</button>
+          </div>
+        </div>`
+        : `<details class="small muted"><summary>Demo accounts</summary>
+        <p>donor@cruor.test · staff@cruor.test · admin@cruor.test<br>Password: <code>cruor-demo-1</code></p></details>`}
     </div>`;
+  const signIn = async (body) => {
+    const r = await api('/api/auth/login', { method: 'POST', body });
+    store.token = r.token; store.user = r.user; renderNav();
+    location.hash = homeFor(r.user);
+  };
   $('#f').addEventListener('submit', (e) => {
     e.preventDefault();
-    submitting(e.target, async () => {
-      const r = await api('/api/auth/login', { method: 'POST', body: formData(e.target) });
-      store.token = r.token; store.user = r.user; renderNav();
-      location.hash = homeFor(r.user);
-    });
+    submitting(e.target, () => signIn(formData(e.target)));
   });
+  $$('[data-demo]').forEach((b) => b.addEventListener('click', async () => {
+    $$('[data-demo]').forEach((x) => (x.disabled = true));
+    try { await signIn({ identifier: `${b.dataset.demo}@cruor.test`, password: 'cruor-demo-1' }); }
+    catch (e) { toast(e.message, 'error'); }
+    finally { $$('[data-demo]').forEach((x) => (x.disabled = false)); }
+  }));
 });
 
 route('#/register', () => {
@@ -460,6 +484,7 @@ route('#/staff', async () => {
         <div><strong>${esc(a.donorName)}</strong> ${a.donorBloodType ? `<span class="blood">${esc(a.donorBloodType)}</span>` : ''} ${a.donorAge ? `· ${a.donorAge} yrs` : ''}</div>
         <div class="small">${fmtDateTime(a.startsAt)} · <strong>${esc(a.status)}</strong></div>
         <p class="small">Please check photo ID before verifying.</p>
+        ${store.meta.demo && new Date(a.startsAt).toDateString() !== new Date().toDateString() ? '<p class="small"><strong>Demo build:</strong> verifying before the appointment day is allowed so you can try the whole flow now. The real service only allows it on the day.</p>' : ''}
         ${a.status === 'booked' ? '<div class="row"><button class="btn" id="verify">Confirm donation completed</button><button class="btn ghost" id="defer">Donor deferred</button></div>' : ''}
       </div>`;
     $('#verify')?.addEventListener('click', async () => {
@@ -551,6 +576,15 @@ async function routeNow() {
 }
 
 async function boot() {
+  if (local) {
+    const note = document.createElement('p');
+    note.className = 'mt-s';
+    note.innerHTML = 'Demo mode: all data stays on this device. <button type="button" class="linklike" id="reset-demo">Reset demo data</button>';
+    $('.footer').append(note);
+    $('#reset-demo').addEventListener('click', () => {
+      if (confirm('Erase everything on this device and start again with fresh demo data?')) local.reset();
+    });
+  }
   store.meta = await api('/api/meta');
   if (store.token) {
     try { store.user = (await api('/api/me')).user; } catch { store.token = null; }

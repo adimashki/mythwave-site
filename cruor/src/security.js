@@ -1,9 +1,12 @@
+// Node implementation of the security interface used by core.js.
+// The on-device build provides the same functions in mobile/security.browser.js.
 import {
   createCipheriv, createDecipheriv, createHash, createHmac,
   randomBytes, scrypt, timingSafeEqual,
 } from 'node:crypto';
 import { promisify } from 'node:util';
 import { config } from './config.js';
+import { codeFromBytes } from './normalize.js';
 
 const scryptAsync = promisify(scrypt);
 const dataKey = createHash('sha256').update(config.dataKey).digest();
@@ -54,27 +57,8 @@ export function newToken() {
   return randomBytes(32).toString('base64url');
 }
 
-// No 0/O/1/I/L to keep codes easy to read aloud and type.
-const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 export function randomCode(len = 8) {
-  const bytes = randomBytes(len);
-  let out = '';
-  for (let i = 0; i < len; i++) out += CODE_ALPHABET[bytes[i] % CODE_ALPHABET.length];
-  return out;
+  return codeFromBytes(randomBytes(len), len);
 }
 
-export function normalizeCode(code) {
-  return String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-}
-
-export function normalizePhone(phone) {
-  if (!phone) return null;
-  const p = String(phone).replace(/[^\d+]/g, '');
-  return p.length >= 7 ? p : null;
-}
-
-export function normalizeEmail(email) {
-  if (!email) return null;
-  const e = String(email).trim().toLowerCase();
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) ? e : null;
-}
+export const nodeSecurity = { hashPassword, verifyPassword, encrypt, decrypt, blindIndex, sha256, newToken, randomCode };

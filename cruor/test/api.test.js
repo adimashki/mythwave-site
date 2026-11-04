@@ -4,6 +4,7 @@ import { createServer } from 'node:http';
 import { openDb } from '../src/db.js';
 import { createApp } from '../src/app.js';
 import { seed, DEMO_PASSWORD } from '../src/seed.js';
+import { nodeSecurity } from '../src/security.js';
 
 // Pin "now" to 09:00 local on a Monday so slots exist regardless of when tests run.
 let now = new Date('2026-11-02T09:00:00');
@@ -11,7 +12,7 @@ let server, base, db;
 
 before(async () => {
   db = openDb(':memory:');
-  await seed(db);
+  await seed(db, nodeSecurity);
   server = createServer(createApp(db, { clock: () => now }));
   await new Promise((r) => server.listen(0, r));
   base = `http://127.0.0.1:${server.address().port}`;

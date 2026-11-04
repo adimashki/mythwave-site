@@ -1,0 +1,14 @@
+{
+  "appId": "app.cruor.demo",
+  "appName": "Cruor",
+  "webDir": "mobile/www",
+  "android": {
+    "backgroundColor": "#fbf7f5"
+  },
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "css",
+      "initialViewportFitValueHint": "cover"
+    }
+  }
+}
