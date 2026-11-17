@@ -1,0 +1,10 @@
+{
+  "name": "Cruor",
+  "short_name": "Cruor",
+  "description": "Give blood, give forward.",
+  "start_url": "/#/dashboard",
+  "display": "standalone",
+  "background_color": "#fbf7f5",
+  "theme_color": "#9b1c2c",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
